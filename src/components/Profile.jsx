@@ -1,6 +1,10 @@
 import React from 'react'
 import { Component } from 'react';
 import StockChart from  './StockChart'
+
+
+
+
 export default class Profile extends Component{
 
 

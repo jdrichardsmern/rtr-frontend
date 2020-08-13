@@ -78,13 +78,12 @@ export default function MenuAppBar(props) {
                 open={open2}
                 onClose={handleClose2}
               >
-                <MenuItem onClick={handleClose2}>Profile1</MenuItem>
-                <MenuItem onClick={handleClose2}>My account1</MenuItem>
-                <MenuItem onClick={() => {
-                    Authentication.logout(() => {
-                        props.logout()
-                    })
-                }}>LogOut1</MenuItem>
+                <MenuItem onClick={handleClose2}>DashBoard</MenuItem>
+                <MenuItem onClick={handleClose2}>My Portfolio</MenuItem>
+                <MenuItem onClick={handleClose2}>placeHolder</MenuItem>
+                <MenuItem onClick={handleClose2}>placeHolder</MenuItem>
+                <MenuItem onClick={handleClose2}>placeHolder</MenuItem>
+                <MenuItem onClick={handleClose2}>placeHolder</MenuItem>
               </Menu>
           
           </div>

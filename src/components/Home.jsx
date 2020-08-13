@@ -40,18 +40,14 @@ export default class Home extends Component{
               }
             axios.post('/users/signup', this.state.user, axiosConfig)
             .then((response) => {
-                // this.props.history.push('/profile')
-                if (response.data.errors){
-                    this.setState({
-                        errors : response.data.errors
-                    })
-                }
+
+
             })
             .catch((err) => {
-                throw(err)
-                // this.setState({
-                //     errors : err
-                // })
+               
+                this.setState({
+                    errors : err.response.data.errors
+                })
             })
 
         }else {
@@ -66,6 +62,7 @@ export default class Home extends Component{
               }
             axios.post('/users/login', this.state.user, axiosConfig)
             .then((response) => {
+                console.log('here')
                 console.log(response)
                 Authentication.login(()=> {
                     // this.props.history.push('/profile')
@@ -76,18 +73,12 @@ export default class Home extends Component{
                 
                 // const isAuthenticated = response.data.isAuthenticated
               
-    
-                if (response.data.errors){
-                    this.setState({
-                        errors : response.data.errors
-                    })
-                }
             })
             .catch((err) => {
-                throw(err)
-                // this.setState({
-                //     errors : err
-                // })
+                
+                this.setState({
+                    errors : err.response.data.errors
+                })
             })
 
         }

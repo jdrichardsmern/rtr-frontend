@@ -1,6 +1,6 @@
 import React from 'react'
 import { Component } from 'react';
-import {BrowserRouter as Router, Route , Switch} from 'react-router-dom'
+import {BrowserRouter as Router, Route , Switch , Link , useHistory} from 'react-router-dom'
 import Profile from './components/Profile'
 // import Signup from './components/Signup'
 // import Login from './components/Login'
@@ -9,6 +9,9 @@ import Dashboard from './components/Dashboard'
 import NotFound from './components/NotFound'
 import axios from 'axios'
 import {ProtectedRoute} from './components/protected.route'
+import SingleStock from './components/SingleStock';
+
+
 
 
 export default class App extends Component{
@@ -30,6 +33,10 @@ export default class App extends Component{
         }, () => {console.log(this.state.stocks)})
     }
 
+    routeChange=(path)=> {
+        let history = useHistory();
+        history.push(path);
+      }
 
     updateUser = (data) => {
         const {email , name , capital} = data.user
@@ -92,8 +99,11 @@ export default class App extends Component{
                 {this.state.login ? 
                     (
                 <Switch>
-                    <Route exact path= "/" render = {props => <Dashboard  user = {this.state.user.email} logout = {this.logout} updateStock = {this.updateStock} stocks={this.state.stocks}  />}/>
+                    <Route exact path= "/" render = {props => <Dashboard  user = {this.state.user.email} logout = {this.logout} updateStock = {this.updateStock} stocks={this.state.stocks} routeChange = {this.routeChange} />}/>
                     <Route excact path = "/profile" component = {Profile}/>
+                    <Route excact path='/stock/:name' render={(props) => {
+                    return ( <SingleStock {...props } /> )
+                }} />
                     {/* <ProtectedRoute 
                     exact
                     path= "/profile"
