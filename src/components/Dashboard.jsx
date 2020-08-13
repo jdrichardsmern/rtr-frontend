@@ -28,15 +28,16 @@ export default class Dashboard extends Component{
     render (){
         return (
             <div>
+                <TopNav user = {this.props.user} logout = {this.props.logout}>Home</TopNav>
                 <Container maxWidth='lg'>
-                    <TopNav user = {this.props.user} logout = {this.props.logout}>Home</TopNav>
+                    
 
                     <div >
 
                     <Grid container spacing={3} justify = {'center'} style = {{marginTop: '50px'}}>
                     {this.props.stocks.map((stock , idx) => {
-                    return   <Grid item xs={3}> 
-                                <StockCard/>
+                    return   <Grid item xs={3} key = {stock._id}> 
+                                <StockCard stock = {stock} />
                             </Grid>
                             
                     })}

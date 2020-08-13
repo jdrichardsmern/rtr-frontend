@@ -10,11 +10,13 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import StockChart from './StockChart'
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    maxWidth: 345
+
   },
   media: {
     height: 0,
@@ -35,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function StockCard() {
+export default function StockCard(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -43,34 +45,28 @@ export default function StockCard() {
     setExpanded(!expanded);
   };
 
+const {name , price , units , history } = props.stock
+ 
   return (
     <Card className={classes.root}>
+      <div>
+       
+      </div>
       <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            R
-          </Avatar>
-        }
-        title="Shrimp and Chorizo Paella"
+        title= {name}
         subheader="September 14, 2016"
+        style = {{backgroundColor: 'grey'}}
       />
-      <CardMedia
-        className={classes.media}
-        image="#"
-        title="Paella dish"
-      />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          This impressive paella is a perfect party dish and a fun meal to cook together with your
-          guests. Add 1 cup of frozen peas along with the mussels, if you like.
-        </Typography>
+      <CardContent >
+        <StockChart history = {history} name = {name}/>
       </CardContent>
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          This impressive paella is a perfect party dish and a fun meal to cook together with your
-          guests. Add 1 cup of frozen peas along with the mussels, if you like.
-        </Typography>
+          <h2>Price: {price}</h2>
+          <h2>Units: {units}</h2>
+          
       </CardContent>
+     
+
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
