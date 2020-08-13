@@ -54,7 +54,6 @@ const {name , price , units , history } = props.stock
       </div>
       <CardHeader
         title= {name}
-        subheader="September 14, 2016"
         style = {{backgroundColor: 'grey'}}
       />
       <CardContent >

@@ -26,25 +26,73 @@ const useStyles = makeStyles((theme) => ({
 export default function MenuAppBar(props) {
   const classes = useStyles();
   const [auth] = React.useState(true);
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl ] = React.useState(null);
+  const [anchorE2, setAnchorE2, ] = React.useState(null);
   const open = Boolean(anchorEl);
-
+  const open2 = Boolean(anchorE2);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
+  const handleMenu2 = (event) => {
+    setAnchorE2(event.currentTarget);
+  };
+
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const handleClose2 = () => {
+    setAnchorE2(null);
   };
 
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar style = {{backgroundColor: 'grey'}}>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+
+
+            <div>
+                   
+          <IconButton 
+          color="inherit" 
+          aria-label="menu"
+          aria-controls="menu"
+          aria-haspopup="true"
+          onClick={handleMenu2}
+          >
             <MenuIcon />
-          </IconButton>
+            </IconButton>
+            <Menu
+                id="menu"
+                anchorEl={anchorE2}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={open2}
+                onClose={handleClose2}
+              >
+                <MenuItem onClick={handleClose2}>Profile1</MenuItem>
+                <MenuItem onClick={handleClose2}>My account1</MenuItem>
+                <MenuItem onClick={() => {
+                    Authentication.logout(() => {
+                        props.logout()
+                    })
+                }}>LogOut1</MenuItem>
+              </Menu>
+          
+          </div>
+    
+
+
+
+
           <Typography variant="h6" className={classes.title}>
             {props.children}
           </Typography>
