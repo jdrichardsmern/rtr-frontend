@@ -7,7 +7,7 @@ import StockCard from './StocksCard'
 // import CssBaseline from '@material-ui/core/CssBaseline';
 // import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import {useHistory} from 'react-router-dom'
+import {useHistory , Link} from 'react-router-dom'
 
 
 export default class Dashboard extends Component{
@@ -30,12 +30,11 @@ export default class Dashboard extends Component{
                     <div >
                     <Grid container spacing={3} justify = {'center'} style = {{marginTop: '50px'}}>
                     {this.props.stocks.map((stock) => {
-                    return   <Grid item xs={3} key = {stock._id} onClick = {() => {
-                        this.props.routeChange(`/stock/${stock.name}`)
-                    }}
-                    > 
-                                <StockCard stock = {stock} />
-                            </Grid>
+                    return   <Grid item xs={2}>
+                    <Link key={stock._id} to={`/stock/${stock._id}`}>
+                      <StockCard stock={stock} />
+                    </Link>
+                  </Grid>
                             
                     })}
                     </Grid>

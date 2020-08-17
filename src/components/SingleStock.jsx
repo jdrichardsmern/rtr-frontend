@@ -1,17 +1,35 @@
-import React from 'react'
-import { Component } from 'react';
-import StockChart from  './StockChart'
+import React, { useState, useEffect } from 'react';
 import {useParams} from 'react-router-dom'
+import StockCard from './StocksCard'
+import axios from 'axios'
 
+
+
+// componentDidMount(){
+    
+//     axios.get('/stock/stock/id').then((response) => {
+//         console.log(response)
+//     })
+// }
 
 
 function SingleStock () {
-    const {name} = useParams()
 
+    let [stock , setStock] = useState('stock')
+    const {id} = useParams()
+
+    useEffect(() => {
+
+        axios.get(`/stock/stock/${id}`).then((response) => {
+        console.log(response.data.stock)
+            setStock(stock = response.data.stock)
+    })
+      });
+      
         return (
             <div>
-                <h1>{name}</h1>
-                
+                {/* <StockCard stock={stock} /> */}
+                {/* <h1>{stock.history[0]}</h1> */}
             </div>
         )
     

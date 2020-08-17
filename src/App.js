@@ -101,7 +101,7 @@ export default class App extends Component{
                 <Switch>
                     <Route exact path= "/" render = {props => <Dashboard  user = {this.state.user.email} logout = {this.logout} updateStock = {this.updateStock} stocks={this.state.stocks} routeChange = {this.routeChange} />}/>
                     <Route excact path = "/profile" component = {Profile}/>
-                    <Route excact path='/stock/:name' render={(props) => {
+                    <Route excact path='/stock/:id' render={(props) => {
                     return ( <SingleStock {...props } /> )
                 }} />
                     {/* <ProtectedRoute 
