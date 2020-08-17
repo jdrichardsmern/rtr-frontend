@@ -5,31 +5,42 @@ import axios from 'axios'
 
 
 
-// componentDidMount(){
-    
-//     axios.get('/stock/stock/id').then((response) => {
-//         console.log(response)
-//     })
-// }
 
 
 function SingleStock () {
+    let x = async () => {
+        let y = await axios.get(`/stock/stock/${id}`)
+        
+        await setStock(y.data.stock)
+        await setHistory([...y.data.stock.history])
+        
+        
+    }
 
-    let [stock , setStock] = useState('stock')
+    let [stock , setStock] = useState({})
+    let [history , setHistory] = useState([])
     const {id} = useParams()
 
     useEffect(() => {
 
-        axios.get(`/stock/stock/${id}`).then((response) => {
-        console.log(response.data.stock)
-            setStock(stock = response.data.stock)
-    })
-      });
-      
+        
+      x()
+ 
+            
+  
+      }, []);
+ 
+    
+
         return (
             <div>
-                {/* <StockCard stock={stock} /> */}
-                {/* <h1>{stock.history[0]}</h1> */}
+                <StockCard stock={stock} />
+                
+                {/* <StockChart history = {history} name = {name}/> */}
+                {/* {history.map((x) => {
+                    return <h1> {x.price}</h1>
+                })} */}
+               
             </div>
         )
     
