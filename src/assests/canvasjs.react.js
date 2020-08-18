@@ -1,5 +1,5 @@
-var React = require('react');
-var CanvasJS = require('./canvasjs.min');
+const React = require('react');
+let CanvasJS = require('./canvasjs.min');
 CanvasJS = CanvasJS.Chart ? CanvasJS : window.CanvasJS;
 
 class CanvasJSChart extends React.Component {
@@ -40,7 +40,7 @@ class CanvasJSChart extends React.Component {
 	}	
 }
 
-var CanvasJSReact = {
+const CanvasJSReact = {
     CanvasJSChart: CanvasJSChart,
     CanvasJS: CanvasJS
 };

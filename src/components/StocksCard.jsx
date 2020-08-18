@@ -51,7 +51,7 @@ const {name , price , units , history } = props.stock
         style = {{backgroundColor: 'grey'}}
       />
       <CardContent >
-        <StockChart history = {history} name = {name}/>
+        {/* <StockChart history = {history} name = {name}/> */}
       </CardContent>
       <CardContent>
           <h2>Price: {price}</h2>

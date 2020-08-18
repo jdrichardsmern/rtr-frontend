@@ -5,10 +5,7 @@ const CanvasJSChart = CanvasJSReact.CanvasJSChart;
  
 const dataPoints =[];
 class StockChart extends Component {
-
 	render() {	
-		console.log(this.state)
-		console.log(this.props)
 		const options = {
 			theme: "light2",
 			title: {
@@ -34,7 +31,19 @@ class StockChart extends Component {
 		</div>
 		);
 	}
+	// componentDidMount(){
 	
+	// 		for (let i = 0; i < this.props.history.length; i++) {
+	// 			dataPoints.push({
+	// 				x: new Date(this.props.history[i].time),
+	// 				y: this.props.history[i].price
+	// 			});
+	// 		}
+		
+	// 	const chart = this.chart;
+	// 		chart.render();
+	
+    // }
 	componentDidUpdate(){
 		if(this.props.history.length > 0){
 			for (let i = 0; i < this.props.history.length; i++) {

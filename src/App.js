@@ -7,8 +7,8 @@ import Profile from './components/Profile'
 import Home from './components/Home'
 import Dashboard from './components/Dashboard'
 import NotFound from './components/NotFound'
-import axios from 'axios'
-import {ProtectedRoute} from './components/protected.route'
+// import axios from 'axios'
+// import {ProtectedRoute} from './components/protected.route'
 import SingleStock from './components/SingleStock';
 import history from './middleware/history'
 
@@ -33,10 +33,10 @@ export default class App extends Component{
         }, () => {console.log(this.state.stocks)})
     }
 
-    routeChange=(path)=> {
-        let history = useHistory();
-        history.push(path);
-      }
+    // routeChange=(path)=> {
+    //     let history = useHistory();
+    //     history.push(path);
+    //   }
 
     updateUser = (data) => {
         const {email , name , capital} = data.user
@@ -105,7 +105,7 @@ export default class App extends Component{
                     <Route exact path= "/" render = {props => <Dashboard  user = {this.state.user.email} logout = {this.logout} updateStock = {this.updateStock} stocks={this.state.stocks} routeChange = {this.routeChange}  />}/>
                     <Route excact path = "/profile" component = {Profile}/>
                     <Route excact path='/stock/:id' render={(props) => {
-                    return ( <SingleStock {...props } user = {this.state.user.email} logout = {this.logout} /> )
+                    return ( <SingleStock {...props }  logout = {this.logout} user = {this.state.user} /> )
                 }} />
                     {/* <ProtectedRoute 
                     exact
