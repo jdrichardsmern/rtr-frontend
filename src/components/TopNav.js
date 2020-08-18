@@ -9,7 +9,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Authentication from "../middleware/auth"
-
+import history from "../middleware/history";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -126,7 +126,7 @@ export default function MenuAppBar(props) {
                 <MenuItem onClick={handleClose}>My account</MenuItem>
                 <MenuItem onClick={() => {
                     Authentication.logout(() => {
-                        props.logout()
+                        props.logout(()=> {history.push("/")})
                     })
                 }}>LogOut</MenuItem>
               </Menu>

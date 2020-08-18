@@ -4,10 +4,8 @@ import { Component } from 'react';
 import axios from 'axios'
 import TopNav from './TopNav'
 import StockCard from './StocksCard'
-// import CssBaseline from '@material-ui/core/CssBaseline';
-// import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import {useHistory , Link} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 
 export default class Dashboard extends Component{

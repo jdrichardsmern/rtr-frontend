@@ -1,6 +1,6 @@
 import React from 'react'
 import { Component } from 'react';
-import {BrowserRouter as Router, Route , Switch , Link , useHistory} from 'react-router-dom'
+import {BrowserRouter as Router, Route , Switch , Link , useHistory , Redirect} from 'react-router-dom'
 import Profile from './components/Profile'
 // import Signup from './components/Signup'
 // import Login from './components/Login'
@@ -10,7 +10,7 @@ import NotFound from './components/NotFound'
 import axios from 'axios'
 import {ProtectedRoute} from './components/protected.route'
 import SingleStock from './components/SingleStock';
-
+import history from './middleware/history'
 
 
 
@@ -50,12 +50,14 @@ export default class App extends Component{
             user: updatedUser
         })
     }
-    logout = () => {
+    logout = (cb) => {
+        cb()
         this.setState({
             user : {name: "" , email: "" , capital: 0,},
             portfolio: [],
             login:false
         })
+        
     }
     componentDidMount(){
         const data = JSON.parse(localStorage.getItem('user'))
@@ -92,17 +94,18 @@ export default class App extends Component{
     // }
 
     render (){
+        
         return (
            
-
-            <Router>
+            
+            <Router history={history}>
                 {this.state.login ? 
                     (
                 <Switch>
-                    <Route exact path= "/" render = {props => <Dashboard  user = {this.state.user.email} logout = {this.logout} updateStock = {this.updateStock} stocks={this.state.stocks} routeChange = {this.routeChange} />}/>
+                    <Route exact path= "/" render = {props => <Dashboard  user = {this.state.user.email} logout = {this.logout} updateStock = {this.updateStock} stocks={this.state.stocks} routeChange = {this.routeChange}  />}/>
                     <Route excact path = "/profile" component = {Profile}/>
                     <Route excact path='/stock/:id' render={(props) => {
-                    return ( <SingleStock {...props } /> )
+                    return ( <SingleStock {...props } user = {this.state.user.email} logout = {this.logout} /> )
                 }} />
                     {/* <ProtectedRoute 
                     exact

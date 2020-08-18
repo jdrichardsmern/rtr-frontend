@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import {useParams} from 'react-router-dom'
 import StockCard from './StocksCard'
 import axios from 'axios'
+import StockChart from './StockChart'
+import TopNav from './TopNav'
 
 
 
-
-
-function SingleStock () {
+function SingleStock (props) {
+    
     let x = async () => {
         let y = await axios.get(`/stock/stock/${id}`)
         
@@ -22,21 +23,17 @@ function SingleStock () {
     const {id} = useParams()
 
     useEffect(() => {
-
-        
       x()
- 
-            
-  
       }, []);
  
     
 
         return (
             <div>
-                <StockCard stock={stock} />
-                
-                {/* <StockChart history = {history} name = {name}/> */}
+                <TopNav user = {props.user} logout = {props.logout}>Home</TopNav>
+                {/* <StockCard stock={stock} />
+                 */}
+                <StockChart history = {history} name = {stock.name}/>
                 {/* {history.map((x) => {
                     return <h1> {x.price}</h1>
                 })} */}
