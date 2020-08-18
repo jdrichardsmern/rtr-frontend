@@ -53,7 +53,9 @@ function SingleStock (props) {
       }, []);
 
       useEffect(() => {
+        
           const buyStock = async () => {
+           
               try{
                 const token = await JSON.parse(localStorage.getItem('token'))
                 let axiosConfig = {
@@ -68,11 +70,36 @@ function SingleStock (props) {
               }
 
               catch(err){
-                setErr(err.response.data.errors)
+                // setErr(err.response.data.errors)
+                console.log(err.response)
               }
           }
           buyStock()
       }, [url])
+
+      useEffect(() => {
+        
+        const sellStock = async () => {
+            try{
+              const token = await JSON.parse(localStorage.getItem('token'))
+              let axiosConfig = {
+                  headers:{
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'auth-token': token,
+                    'Access-Control-Allow-Origin': '*'
+                  }
+                }
+                let data = await axios.put(url,{email:props.user.email, sell: number } ,axiosConfig)
+                setMsg(data.data.message)
+            }
+
+            catch(err){
+              setErr(err.response.data.errors)
+            }
+        }
+        sellStock()
+        
+    }, [url])
 
         return (
             <div style = {{display:'flex' , flexDirection:'column'}}>
@@ -111,7 +138,10 @@ function SingleStock (props) {
                                     Buy
                                     </button>
                                  </form>
-                                 <form className='ui form' onSubmit={() => {}}>
+                                 <form className='ui form' onSubmit={(e) => {
+                                    setUrl(`/stock/sell/${id}`)
+                                    e.preventDefault()
+                                }}>
                                     <button type='submit' className='ui button red'>
                                     sell
                                     </button>

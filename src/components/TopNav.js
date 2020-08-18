@@ -1,4 +1,5 @@
 import React from 'react';
+import {useHistory} from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -9,7 +10,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Authentication from "../middleware/auth"
-import history from "../middleware/history";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 export default function MenuAppBar(props) {
   const classes = useStyles();
   const [auth] = React.useState(true);
@@ -31,6 +33,7 @@ export default function MenuAppBar(props) {
   const open = Boolean(anchorEl);
   const open2 = Boolean(anchorE2);
 
+  const history = useHistory()
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -122,7 +125,7 @@ export default function MenuAppBar(props) {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={() => {history.push("/profile") }}>Profile</MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
                 <MenuItem onClick={() => {
                     Authentication.logout(() => {
