@@ -14,56 +14,30 @@ function SingleStock (props) {
     let [number , setNumber] = useState(1)
     let [send , setSend] = useState(false)
     let [password , setPassword] = useState('')
-    let [url ,setUrl] = useState('')
+    let [route , setRoute] = useState('')
     let [msg ,setMsg] = useState('')
     let [err ,setErr] = useState('')
     const {id} = useParams()
 
 
-    // const getStocks = async () => {
-    //     let data = await axios.get(`/stock/stock/${id}`)
-    //     await setStock(data.data.stock)
-    //     await setHistory([...data.data.stock.history])
-    // }
 
-        
-    //     let axiosConfig = {
-    //         headers:{
-    //           'Content-Type': 'application/json; charset=UTF-8',
-    //           'auth-token': token,
-    //           'Access-Control-Allow-Origin': '*'
-    //         }
-    //       }
-    //       let data = await axios.put(`/stock/buy/${id}`,{email:props.user.email, order: number } ,axiosConfig)
-
-
-    //       setMsg(data.data.message)
-    //       setErr(data.response.data.errors)
-    // }
     const getStocks = async () => {
         let data = await axios.get(`/stock/stock/${id}`)
         await setStock(data.data.stock)
         await setHistory([...data.data.stock.history])
     }
+    const clearMsg = () => {
+        setMsg('')
+        setErr('')
+    }
 
-    // const verify = async (pw) => {
-    //     try {
-    //         setUrl(`/stock/sell/${id}`)
-
-
-
-    //     }
-    //     catch(err){
-
-    //     }
-    // }
 
     useEffect(() => {
     getStocks()
       }, []);
 
       const buyStock = async () => {
-           
+        clearMsg()
         try{
           const token = await JSON.parse(localStorage.getItem('token'))
           let axiosConfig = {
@@ -73,72 +47,51 @@ function SingleStock (props) {
                 'Access-Control-Allow-Origin': '*'
               }
             }
-            let data = await axios.put(url,{email:props.user.email, order: Number(number) , password : password} ,axiosConfig)
+            let data = await axios.put(`/stock/buy/${id}`,{email:props.user.email, order: Number(number) , password : password} ,axiosConfig)
             setMsg(data.data.message)
-            setErr('')
-            setUrl('')
         }
 
         catch(err){
-          setUrl('')
-            console.log(err.response)
-          // setErr(err.response.data.errors)
-          
+          setErr(err.response.data.errors)
         }
     }
+    const sellStock = async () => {
+        clearMsg()
+        try{
+            const token = await JSON.parse(localStorage.getItem('token'))
+            let axiosConfig = {
+                headers:{
+                  'Content-Type': 'application/json; charset=UTF-8',
+                  'auth-token': token,
+                  'Access-Control-Allow-Origin': '*'
+                }
+              }
+              let data = await axios.put(`/stock/sell/${id}`,{email:props.user.email, sell: Number(number) , password: password} ,axiosConfig)
+              setMsg(data.data.message)
+          }
+
+          catch(err){
+            setErr(err.response.data.errors)
+          }
+}
 
       useEffect(() => {
-        
           if (send){
+              if(route === 'buy'){
+                buyStock()
+              }
+              if (route === 'sell'){
+                  sellStock()
+              }
             setSend(false)
+            setRoute('')
             props.updateCaptial(password)
-            buyStock()
             getStocks()
           }
           
 
-      }, [url])
+      }, [route])
 
-      useEffect(() => {
-        const sellStock = async () => {
-                try{
-
-                    const token = await JSON.parse(localStorage.getItem('token'))
-                    let axiosConfig = {
-                        headers:{
-                          'Content-Type': 'application/json; charset=UTF-8',
-                          'auth-token': token,
-                          'Access-Control-Allow-Origin': '*'
-                        }
-                      }
-                      let data = await axios.put(url,{email:props.user.email, sell: Number(number) , password: password} ,axiosConfig)
-                      
-                      setMsg(data.data.message)
-                      setErr('')
-                      setUrl('')
-                  }
-      
-                  catch(err){
-                    setUrl('')
-                    setMsg("")
-                    setErr(err.response.data.errors)
-                  }
-
-                    
-          
-           
-
-        }
-
-        if(send) {
-            setSend(false)
-            props.updateCaptial(password)
-            sellStock()
-            // getStocks()
-        }
-
-       
-    }, [url])
 
         return (
             <div style = {{display:'flex' , flexDirection:'column'}}>
@@ -151,7 +104,7 @@ function SingleStock (props) {
                     <Container  style = {{width: '200px'}}>
                     <div>
                     <h2> {props.user.email}</h2>
-                    <h2> Capital: {props.user.capital}</h2>
+                    <h2> Capital: {props.user.capital.toFixed(2)}</h2>
                     </div>
                     </Container>
                    <div style= {{flexDirection:'column' , width:'100%'}}>
@@ -196,9 +149,9 @@ function SingleStock (props) {
                                     e.preventDefault()
                                     const enteredPassword = prompt('Please enter your password')
                                     if(enteredPassword){
+                                        setRoute('buy')
                                         setPassword(enteredPassword)
                                         setSend(true)
-                                        setUrl(`/stock/buy/${id}`)
                                    }
                                     
                                 }}>
@@ -210,9 +163,9 @@ function SingleStock (props) {
                                      e.preventDefault()
                                      const enteredPassword = prompt('Please enter your password')
                                      if(enteredPassword){
+                                         setRoute('sell')
                                          setPassword(enteredPassword)
                                          setSend(true)
-                                         setUrl(`/stock/sell/${id}`)
                                     }
                                 }}>
                                     <button type='submit' className='ui button red'>
@@ -221,23 +174,9 @@ function SingleStock (props) {
                                 </form>
                                 </div>
                             </div>
-            
-                           
-
                         </div>
                    </div>
-
-                    
              </div>
-
-                {/* <div className = 'container' style>
-                    <div style={{width:'50%' , marginTop:'100px'}} >
-                        <StockChart history = {history} name = {stock.name}/>
-                    </div>
-                </div> */}
-
-                
-
             </div>
         )
     
