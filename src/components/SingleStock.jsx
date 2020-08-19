@@ -62,44 +62,44 @@ function SingleStock (props) {
     getStocks()
       }, []);
 
+      const buyStock = async () => {
+           
+        try{
+          const token = await JSON.parse(localStorage.getItem('token'))
+          let axiosConfig = {
+              headers:{
+                'Content-Type': 'application/json; charset=UTF-8',
+                'auth-token': token,
+                'Access-Control-Allow-Origin': '*'
+              }
+            }
+            let data = await axios.put(url,{email:props.user.email, order: Number(number) , password : password} ,axiosConfig)
+            setMsg(data.data.message)
+            setErr('')
+            setUrl('')
+        }
+
+        catch(err){
+          setUrl('')
+            console.log(err.response)
+          // setErr(err.response.data.errors)
+          
+        }
+    }
+
       useEffect(() => {
         
-          const buyStock = async () => {
-           
-              try{
-                const token = await JSON.parse(localStorage.getItem('token'))
-                let axiosConfig = {
-                    headers:{
-                      'Content-Type': 'application/json; charset=UTF-8',
-                      'auth-token': token,
-                      'Access-Control-Allow-Origin': '*'
-                    }
-                  }
-                  let data = await axios.put(url,{email:props.user.email, order: Number(number) , password : password} ,axiosConfig)
-                  setMsg(data.data.message)
-                  setErr('')
-                  props.updateCapital()
-              }
-
-              catch(err){
-                  console.log(err.response)
-                // setErr(err.response.data.errors)
-                
-              }
-          }
-
           if (send){
             setSend(false)
             props.updateCaptial(password)
             buyStock()
+            getStocks()
           }
           
 
       }, [url])
 
       useEffect(() => {
-        
-        
         const sellStock = async () => {
                 try{
 
@@ -134,6 +134,7 @@ function SingleStock (props) {
             setSend(false)
             props.updateCaptial(password)
             sellStock()
+            // getStocks()
         }
 
        
@@ -192,6 +193,7 @@ function SingleStock (props) {
                                 </div>
                                 <div style = {{display:'flex'}}>
                                 <form className='ui form' onSubmit={(e) => {
+                                    e.preventDefault()
                                     const enteredPassword = prompt('Please enter your password')
                                     if(enteredPassword){
                                         setPassword(enteredPassword)
@@ -199,7 +201,6 @@ function SingleStock (props) {
                                         setUrl(`/stock/buy/${id}`)
                                    }
                                     
-                                    e.preventDefault()
                                 }}>
                                     <button type='submit' className='ui button green'>
                                     Buy

@@ -13,7 +13,7 @@ import SingleStock from './components/SingleStock';
 // import history from './middleware/history'
 import Portfolio from './components/Portfolio'
 import axios from 'axios'
-
+import CreateStock from './components/CreateStock'
 
 export default class App extends Component{
     state = {
@@ -45,9 +45,7 @@ export default class App extends Component{
                   'Access-Control-Allow-Origin': '*'
                 }
               }
-              console.log({email: this.state.user.email , password: pw})
            let response = await axios.post('/users/user',{email: this.state.user.email , password: pw}, axiosConfig)
-              console.log(response)
            const capital = response.data.user.capital
            let updatedUser = {...this.state.user}
            updatedUser.capital = capital
@@ -125,6 +123,7 @@ export default class App extends Component{
                     <Route exact path= "/" render = {props => <Dashboard  user = {this.state.user} logout = {this.logout} updateStock = {this.updateStock} stocks={this.state.stocks} routeChange = {this.routeChange}  />}/>
                     <Route exact path= "/profile" render = {props => <Profile  user = {this.state.user} logout = {this.logout}  updateUser={this.updateUser} />}/>
                     <Route exact path= "/portfolio" render = {props => <Portfolio  user = {this.state.user} logout = {this.logout}   />}/>
+                    <Route exact path= "/createstock" render = {props => <CreateStock  user = {this.state.user} logout = {this.logout}   />}/>
                     <Route excact path='/stock/:id' render={(props) => {
                     return ( <SingleStock {...props }  logout = {this.logout} user = {this.state.user} updateCaptial = {this.updateCaptial} /> )
                 }} />

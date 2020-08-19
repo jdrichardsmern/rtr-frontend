@@ -8,13 +8,11 @@ import { Message } from 'semantic-ui-react'
 export default class Profile extends Component{
 
         state={
-        user:{
+        stock:{
             name:'',
-            email:'',
-            userEmail: this.props.user.email,
-            password: '',
-            nPassword:'',
-            retypeNPassword:'',
+            price:0,
+            units:0,
+            password: ''
         },
         msg:{
             message: '',
@@ -25,10 +23,10 @@ export default class Profile extends Component{
 
 
 handleChange = (event) => {
-    let updatedUser = {...this.state.user}
-    updatedUser[event.target.name] = event.target.value
+    let updatedStock = {...this.state.stock}
+    updatedStock[event.target.name] = event.target.value
     this.setState({
-        user:updatedUser
+        stock:updatedStock
     })
 }
 
@@ -41,73 +39,72 @@ handleMsgClear = () => {
 
 handleSubmit = (event) => {
     event.preventDefault()
-    const updateUser = async () => {
-        try{
-          const token = await JSON.parse(localStorage.getItem('token'))
-          let axiosConfig = {
-              headers:{
-                'Content-Type': 'application/json; charset=UTF-8',
-                'auth-token': token,
-                'Access-Control-Allow-Origin': '*'
-              }
-            }
-            let response = await axios.put(`/users/update`, this.state.user ,axiosConfig)
-            if(response.status === 200){
-                
-                
-                let msg = {errors : '' , message: response.data.message}
-                this.setState({
-                    msg
-                },() => {this.props.updateUser(response.data)})
-            }
-        }
 
-        catch(err){
-            let msg = {errors : err.response.data.errors , message: ''}
-            this.setState({
-                msg
-            })
-        }
+
+    const updateStock = async () => {
+
+        // try{
+        //   const token = await JSON.parse(localStorage.getItem('token'))
+        //   let axiosConfig = {
+        //       headers:{
+        //         'Content-Type': 'application/json; charset=UTF-8',
+        //         'auth-token': token,
+        //         'Access-Control-Allow-Origin': '*'
+        //       }
+        //     }
+        //     let response = await axios.put(`/users/update`, this.state.user ,axiosConfig)
+        //     if(response.status === 200){
+                
+                
+        //         let msg = {errors : '' , message: response.data.message}
+        //         this.setState({
+        //             msg
+        //         },() => {this.props.updateUser(response.data)})
+        //     }
+        // }
+
+        // catch(err){
+        //     let msg = {errors : err.response.data.errors , message: ''}
+        //     this.setState({
+        //         msg
+        //     })
+        // }
     }
 
 
 
     const enteredPassword = prompt('Please enter your password')
     if(enteredPassword){
-        let updatedPW = {...this.state.user , password: enteredPassword}
+        let updatedPW = {...this.state.stock , password: enteredPassword}
         this.setState({
-            user :updatedPW
-        },()=> {updateUser()} )
+            stock :updatedPW
+        },()=> {updateStock()} )
 
 
 
     }
 }
 
-componentDidMount(){
-    let updateState = {...this.props.user , userEmail: this.props.user.email}
+// componentDidMount(){
+//     let updateState = {...this.props.user , userEmail: this.props.user.email}
 
-    this.setState({
-        user:updateState
-    })
-}
+//     this.setState({
+//         user:updateState
+//     })
+// }
 
 
 
 
 
     render (){
-        const {name, email , nPassword , retypeNPassword} = this.state.user
+        const {name, price, units} = this.state.stock
         return (
             <div className='ui' style= {{display:'flex' , flexDirection:'column'}} >
-               <TopNav user = {this.props.user} logout = {this.props.logout}>Profile</TopNav>
+               <TopNav user = {this.props.user} logout = {this.props.logout}>Create Stock</TopNav>
                 <div style={ {marginTop:'50px'}}>
-                    <div style = {{display:'flex' ,justifyContent:'center'}}>
-                        <img src = {'https://www.dovercourt.org/wp-content/uploads/2019/11/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.jpg'} alt= '' style={{width:'300px' , marginTop:'100px'}} />
-                    </div>
+
                     <div style = {{display:'flex' ,flexDirection:'column' , alignItems:'center' , marginTop:'20px'}}>
-                         <h2>Name: {this.props.user.name ? this.props.user.name : 'PlaceHolder'}</h2>
-                         <h2>Email: {this.props.user.email}</h2>
                          <h2>Capital: ${this.props.user.capital.toFixed(2)}</h2>
                     </div>
                     <hr/>
@@ -146,24 +143,25 @@ componentDidMount(){
                             </div>
                         </div>
                         <div className='field'>
-                            <label htmlFor='subject'>Email</label>
+                            <label htmlFor='subject'>Units</label>
                             <div className='ui fluid input'>
-                                <input type='email' name='email' value={email} onChange={this.handleChange} />
+                                <input type='number' name='units' value={units} min={1} onChange={this.handleChange} />
                             </div>
                         </div>
                         <div className='field'>
-                            <label htmlFor='article'>New Password</label>
+                            <label htmlFor='article'>Price</label>
                             <div className='ui fluid input'>
-                                <input type='password' name='nPassword' value={nPassword} onChange={this.handleChange} />
+                                <input type='number' name='price' value={price}  min={1} onChange={this.handleChange} />
                             </div>
                         </div>
-                        <div className='field'>
-                            <label htmlFor='article'>Retype New Password</label>
-                            <div className='ui fluid input'>
-                                <input type='password' name='retypeNPassword' value={retypeNPassword} onChange={this.handleChange} />
-                            </div>
-                        </div>                      
+
                     </div>
+                    <div className='field' style={{}}>
+                            <label htmlFor='article'>Total Cost</label>
+                            <div className='ui fluid'>
+                                <h2>${price*units}</h2>
+                            </div>
+                        </div>
                     <div className="field">
                         <button type='submit' className='ui button green'>Submit</button>
                     </div>

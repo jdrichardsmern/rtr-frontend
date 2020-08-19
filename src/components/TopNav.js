@@ -83,7 +83,7 @@ export default function MenuAppBar(props) {
               >
                 <MenuItem onClick={() => {history.push("/") }}>DashBoard</MenuItem>
                 <MenuItem onClick={() => {history.push("/portfolio")}}>My Portfolio</MenuItem>
-                <MenuItem onClick={handleClose2}>placeHolder</MenuItem>
+                <MenuItem onClick={() => {history.push("/createStock")}}>Create Stock</MenuItem>
                 <MenuItem onClick={handleClose2}>placeHolder</MenuItem>
                 <MenuItem onClick={handleClose2}>placeHolder</MenuItem>
                 <MenuItem onClick={handleClose2}>placeHolder</MenuItem>
