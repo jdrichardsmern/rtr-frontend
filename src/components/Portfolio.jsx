@@ -46,6 +46,11 @@ componentDidMount(){
         return (
             <div className='ui' style= {{display:'flex' , flexDirection:'column'}} >
                <TopNav user = {this.props.user} logout = {this.props.logout}>Portfolio</TopNav>
+               <div style = {{display:'flex' ,flexDirection:'column' , alignItems:'center' , marginTop:'20px'}}>
+                         <h2>Name: {this.props.user.name }</h2>
+                         <h2>Email: {this.props.user.email}</h2>
+                         <h2>Capital: ${this.props.user.capital}</h2>
+                    </div>
                 <div style={ {marginTop:'50px'}}>
                     <div style = {{display:'flex' ,justifyContent:'center'}}>
                         <Card.Group>

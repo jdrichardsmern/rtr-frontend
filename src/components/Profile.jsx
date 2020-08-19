@@ -53,10 +53,12 @@ handleSubmit = (event) => {
             }
             let response = await axios.put(`/users/update`, this.state.user ,axiosConfig)
             if(response.status === 200){
+                
+                
                 let msg = {errors : '' , message: response.data.message}
                 this.setState({
                     msg
-                })
+                },() => {this.props.updateUser(response.data)})
             }
         }
 

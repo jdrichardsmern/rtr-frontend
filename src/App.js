@@ -12,6 +12,7 @@ import NotFound from './components/NotFound'
 import SingleStock from './components/SingleStock';
 // import history from './middleware/history'
 import Portfolio from './components/Portfolio'
+import axios from 'axios'
 
 
 export default class App extends Component{
@@ -37,14 +38,33 @@ export default class App extends Component{
     //     let history = useHistory();
     //     history.push(path);
     //   }
+    updateCaptial = async (pw) => {
+            let axiosConfig = {
+                headers:{
+                  'Content-Type': 'application/json; charset=UTF-8',
+                  'Access-Control-Allow-Origin': '*'
+                }
+              }
+              console.log({email: this.state.user.email , password: pw})
+           let response = await axios.post('/users/user',{email: this.state.user.email , password: pw}, axiosConfig)
+              console.log(response)
+           const capital = response.data.user.capital
+           let updatedUser = {...this.state.user}
+           updatedUser.capital = capital
+           localStorage.setItem('user', JSON.stringify(response.data.user))
+           this.setState({
+            user: updatedUser
+        })
+    }   
 
-    updateUser = (data) => {
+    updateUser = async (data) => {
+
         const {email , name , capital} = data.user
         let updatedUser = {...this.state.user}
         updatedUser.email = email
         updatedUser.name = name
         updatedUser.capital = capital
-
+        localStorage.setItem('user', JSON.stringify(data.user))
         this.setState({
             login: true,
             user: updatedUser
@@ -103,10 +123,10 @@ export default class App extends Component{
                     (
                 <Switch>
                     <Route exact path= "/" render = {props => <Dashboard  user = {this.state.user} logout = {this.logout} updateStock = {this.updateStock} stocks={this.state.stocks} routeChange = {this.routeChange}  />}/>
-                    <Route exact path= "/profile" render = {props => <Profile  user = {this.state.user} logout = {this.logout}  />}/>
-                    <Route exact path= "/portfolio" render = {props => <Portfolio  user = {this.state.user} logout = {this.logout}  />}/>
+                    <Route exact path= "/profile" render = {props => <Profile  user = {this.state.user} logout = {this.logout}  updateUser={this.updateUser} />}/>
+                    <Route exact path= "/portfolio" render = {props => <Portfolio  user = {this.state.user} logout = {this.logout}   />}/>
                     <Route excact path='/stock/:id' render={(props) => {
-                    return ( <SingleStock {...props }  logout = {this.logout} user = {this.state.user} /> )
+                    return ( <SingleStock {...props }  logout = {this.logout} user = {this.state.user} updateCaptial = {this.updateCaptial} /> )
                 }} />
                     {/* <ProtectedRoute 
                     exact
