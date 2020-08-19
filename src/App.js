@@ -10,8 +10,8 @@ import NotFound from './components/NotFound'
 // import axios from 'axios'
 // import {ProtectedRoute} from './components/protected.route'
 import SingleStock from './components/SingleStock';
-import history from './middleware/history'
-
+// import history from './middleware/history'
+import Portfolio from './components/Portfolio'
 
 
 export default class App extends Component{
@@ -98,12 +98,13 @@ export default class App extends Component{
         return (
            
             
-            <Router history={history}>
+            <Router>
                 {this.state.login ? 
                     (
                 <Switch>
                     <Route exact path= "/" render = {props => <Dashboard  user = {this.state.user} logout = {this.logout} updateStock = {this.updateStock} stocks={this.state.stocks} routeChange = {this.routeChange}  />}/>
-                    <Route exact path= "/profile" render = {props => <Profile  user = {this.state.user} logout = {this.logout} updateStock = {this.updateStock} stocks={this.state.stocks} routeChange = {this.routeChange}  />}/>
+                    <Route exact path= "/profile" render = {props => <Profile  user = {this.state.user} logout = {this.logout}  />}/>
+                    <Route exact path= "/portfolio" render = {props => <Portfolio  user = {this.state.user} logout = {this.logout}  />}/>
                     <Route excact path='/stock/:id' render={(props) => {
                     return ( <SingleStock {...props }  logout = {this.logout} user = {this.state.user} /> )
                 }} />

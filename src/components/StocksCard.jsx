@@ -7,7 +7,7 @@ import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import StockChart from './StockChart'
+// import StockChart from './StockChart'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function StockCard(props) {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+  
 
 
 const {name , price , units , history } = props.stock

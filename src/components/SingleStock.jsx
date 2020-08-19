@@ -38,17 +38,13 @@ function SingleStock (props) {
     //       setMsg(data.data.message)
     //       setErr(data.response.data.errors)
     // }
-
-
-
-    
-    useEffect(() => {
-
-      const getStocks = async () => {
+    const getStocks = async () => {
         let data = await axios.get(`/stock/stock/${id}`)
         await setStock(data.data.stock)
         await setHistory([...data.data.stock.history])
     }
+
+    useEffect(() => {
     getStocks()
       }, []);
 
@@ -75,6 +71,7 @@ function SingleStock (props) {
               }
           }
           buyStock()
+          
       }, [url])
 
       useEffect(() => {
@@ -103,7 +100,7 @@ function SingleStock (props) {
 
         return (
             <div style = {{display:'flex' , flexDirection:'column'}}>
-                <TopNav  user = {props.user} logout = {props.logout}>Home</TopNav>
+                <TopNav  user = {props.user} logout = {props.logout}>{stock.name}</TopNav>
 
 
                 <div style = {{display:'flex'}}>
@@ -122,10 +119,16 @@ function SingleStock (props) {
                         <StockChart history = {history} name = {stock.name} />
                         </Container>
                         <hr/>
-                        <div style = {{display: 'flex', justifyContent:'center'}}>
+                        <div style = {{display: 'flex',justifyContent:'center'}}>
+                            
                             <div>
-                            <div className='ui fluid input'>
-                                    <input type='number' name='amount' min={1} value = {number} onChange = {(event) =>{
+                            <div>
+                                <h3>Stock Avalible: {stock.units - stock.sold}</h3>
+                                <h3>Price Per Stock: {stock.price}</h3>
+                            </div>
+                            <hr/>
+                            <div className='ui fluid input' >
+                                    <input type='number' name='amount'  min={1} value = {number} onChange = {(event) =>{
                                         setNumber(event.target.value)
                                         }} />
                                 </div>

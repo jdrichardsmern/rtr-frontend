@@ -65,7 +65,6 @@ export default class Home extends Component{
             axios.post('/users/login', this.state.user, axiosConfig)
             .then((response) => {
                 
-                console.log(response)
                 Authentication.login(()=> {
                     // this.props.history.push('/profile')
                     this.props.updateUser(response.data)
