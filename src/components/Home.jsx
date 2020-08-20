@@ -3,7 +3,7 @@ import { Component } from 'react';
 import Login from './Login'
 import axios from 'axios'
 import Authentication from "../middleware/auth"
-
+import {Redirect} from 'react-router-dom'
 
 export default class Home extends Component{
     state = {
@@ -13,10 +13,17 @@ export default class Home extends Component{
             token: ""
         },
         errors:"",
+        msg:'',
         signup: false
 
     }
 
+    handleClearFlash = () => {
+        this.setState({
+            msg: "",
+            errors: ''
+        })
+    }
 
 
     handleChange = (event) => {
@@ -32,7 +39,7 @@ export default class Home extends Component{
 
     handleLogin = () => { 
 
-
+        this.handleClearFlash()
         if (this.state.signup){
             let axiosConfig = {
                 headers:{
@@ -42,7 +49,10 @@ export default class Home extends Component{
               }
             axios.post('/users/signup', this.state.user, axiosConfig)
             .then((response) => {
-
+                this.setState({
+                    signup:false,
+                    msg: 'You have Signed Up, You can now login'
+                })
 
             })
             .catch((err) => {
@@ -55,7 +65,7 @@ export default class Home extends Component{
         }else {
 
 
-
+            this.handleClearFlash()
             let axiosConfig = {
                 headers:{
                   'Content-Type': 'application/json; charset=UTF-8',
@@ -94,16 +104,17 @@ export default class Home extends Component{
     }
 
     render (){
+        const {msg , errors, password, email , signup} = this.state
         return (
             <div>
                 {this.state.signup ? 
-                <Login Login = {this.handleLogin} errors = {this.state.errors} password={this.state.password} email = {this.state.email} handleChange = {this.handleChange} toggle = {this.handleToggle} message = {"Have an account? Log In"} signup = {this.state.signup}>
+                <Login Login = {this.handleLogin} msg = {msg} errors = {errors} password={password} email = {email} handleChange = {this.handleChange} toggle = {this.handleToggle} message = {"Have an account? Log In"} signup = {signup}>
                     SignUp
                 </Login>
                 
                 :
                 (
-                <Login Login = {this.handleLogin} errors = {this.state.errors} password={this.state.password} email = {this.state.email} handleChange = {this.handleChange} toggle = {this.handleToggle} message = {"Don't have an account? Sign Up"} signup = {this.state.signup}>
+                <Login Login = {this.handleLogin} msg = {msg} errors = {errors} password={password} email = {email} handleChange = {this.handleChange} toggle = {this.handleToggle} message = {"Don't have an account? Sign Up"} signup = {signup}>
                 Login
                 </Login>
                 )

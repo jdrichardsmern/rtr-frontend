@@ -10,7 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-// import { Component } from 'react';
+import { Message } from 'semantic-ui-react'
 
 function Copyright() {
   return (
@@ -76,7 +76,25 @@ export default function Login(props) {
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
-            <h1>{props.errors}</h1>
+        {props.errors ?  
+                    <Message
+                   
+                    header='Error'
+                    content={props.errors}
+                    color='red'
+                  />
+                    :
+                    props.msg
+                    ?
+                    <Message
+                    
+                    header='Message'
+                    content={props.msg}
+                    color='green'
+                  />
+                  :
+                  <div></div>
+                    }
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>

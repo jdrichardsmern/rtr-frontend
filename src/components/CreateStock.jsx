@@ -10,6 +10,7 @@ export default class Profile extends Component{
         state={
         stock:{
             name:'',
+            email: this.props.user.email,
             price:0,
             units:0,
             password: ''
@@ -41,34 +42,33 @@ handleSubmit = (event) => {
     event.preventDefault()
 
 
-    const updateStock = async () => {
+    const createStock = async () => {
 
-        // try{
-        //   const token = await JSON.parse(localStorage.getItem('token'))
-        //   let axiosConfig = {
-        //       headers:{
-        //         'Content-Type': 'application/json; charset=UTF-8',
-        //         'auth-token': token,
-        //         'Access-Control-Allow-Origin': '*'
-        //       }
-        //     }
-        //     let response = await axios.put(`/users/update`, this.state.user ,axiosConfig)
-        //     if(response.status === 200){
+        try{
+          const token = await JSON.parse(localStorage.getItem('token'))
+          let axiosConfig = {
+              headers:{
+                'Content-Type': 'application/json; charset=UTF-8',
+                'auth-token': token,
+                'Access-Control-Allow-Origin': '*'
+              }
+            }
+            let response = await axios.post(`/stock/create`, this.state.stock ,axiosConfig)
+            if(response.status === 200){
                 
-                
-        //         let msg = {errors : '' , message: response.data.message}
-        //         this.setState({
-        //             msg
-        //         },() => {this.props.updateUser(response.data)})
-        //     }
-        // }
+                let msg = {errors : '' , message: response.data.message}
+                this.setState({
+                    msg
+                })
+            }
+        }
 
-        // catch(err){
-        //     let msg = {errors : err.response.data.errors , message: ''}
-        //     this.setState({
-        //         msg
-        //     })
-        // }
+        catch(err){
+            let msg = {errors : err.response.data.errors , message: ''}
+            this.setState({
+                msg
+            })
+        }
     }
 
 
@@ -78,7 +78,9 @@ handleSubmit = (event) => {
         let updatedPW = {...this.state.stock , password: enteredPassword}
         this.setState({
             stock :updatedPW
-        },()=> {updateStock()} )
+        },()=> {
+            createStock()
+        } )
 
 
 

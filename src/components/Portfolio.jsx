@@ -2,7 +2,6 @@ import React from 'react'
 import { Component } from 'react';
 import TopNav from './TopNav'
 import axios from 'axios'
-import { Message } from 'semantic-ui-react'
 import { Card } from 'semantic-ui-react'
 import {Link } from 'react-router-dom'
 
