@@ -8,7 +8,7 @@ import Container from '@material-ui/core/Container';
 import {Link} from 'react-router-dom'
 import search from '../middleware/search'
 import Search from './Search'
-
+import Live from './Live'
 
 
 
@@ -27,23 +27,26 @@ export default class Dashboard extends Component{
         return (
             <div>
                 <TopNav user = {this.props.user} logout = {this.props.logout}>Home</TopNav>
-                
+                <div style ={{display:'flex' , marginTop: '100px'}}>
                 <Container maxWidth='lg'>
-                
-                    <div style= {{marginTop: '100px'}}>
-                    <Search searchTerm = {this.props.searchTerm} handleSearch={this.props.handleSearch}  />
-                    <Grid container spacing={3} justify = {'center'} style = {{marginTop: '50px'}}>
-                    {this.props.stocks.filter(search(this.props.searchTerm)).map((stock) => {
-                    return   <Grid item xs={2}>
-                    <Link key={stock._id} to={`/stock/${stock._id}`}>
-                      <StockCard stock={stock} />
-                    </Link>
-                  </Grid>
-                            
-                    })}
-                    </Grid>
-                    </div>
-                </Container>
+                <Search searchTerm = {this.props.searchTerm} handleSearch={this.props.handleSearch}  />
+                <Grid container spacing={3} justify = {'center'} style = {{marginTop: '50px'}}>
+                {this.props.stocks.filter(search(this.props.searchTerm)).map((stock) => {
+                return   <Grid item xs={2}>
+                <Link key={stock._id} to={`/stock/${stock._id}`}>
+                  <StockCard stock={stock} />
+                </Link>
+              </Grid>
+                        
+                })}
+                </Grid>
+            </Container>
+            <Container maxWidth = 'sm'>
+                <div >
+                 <Live></Live>
+                </div>
+            </Container>
+                </div>
             </div>
         )
     }

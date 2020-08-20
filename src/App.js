@@ -15,6 +15,10 @@ import Portfolio from './components/Portfolio'
 import axios from 'axios'
 import CreateStock from './components/CreateStock'
 
+
+import Live from './components/Live'
+
+
 export default class App extends Component{
     state = {
         login: false,
@@ -146,6 +150,7 @@ export default class App extends Component{
                 :
                  (
                 <Switch>
+                    {/* <Route exact path= "/"  render = {props => <Live />}/> */}
                     <Route exact path= "/"  render = {props => <Home  updateUser = {this.updateUser}/>}/>
                     
                     <Route path="*" component={NotFound}/>
