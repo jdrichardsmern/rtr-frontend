@@ -6,6 +6,7 @@ import TopNav from './TopNav'
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Message } from 'semantic-ui-react'
+import Live from './Live'
 
 function SingleStock (props) {
 
@@ -101,13 +102,17 @@ function SingleStock (props) {
                 <div style = {{display:'flex'}}>
                     <CssBaseline />
                    
-                    <Container  style = {{width: '200px'}}>
-                    <div>
-                    <h2> {props.user.email}</h2>
+                    {/* <Container  style = {{width: '300px'}}> */}
+                      
+                      <div style = {{marginTop : '100px' , textAlign:'center'}}>
                     <h2> Capital: {props.user.capital.toFixed(2)}</h2>
+                    <hr/>
+                    <Live/>
                     </div>
-                    </Container>
-                   <div style= {{flexDirection:'column' , width:'100%'}}>
+                      
+
+                    {/* </Container> */}
+                   <div style= {{flexDirection:'column' , width:'70%'}}>
                         <Container maxWidth="lg" style = {{marginTop : '100px'}}>
                         {err ?  
                     <Message
@@ -173,9 +178,12 @@ function SingleStock (props) {
                                     </button>
                                 </form>
                                 </div>
-                            </div>
+                            </div>   
                         </div>
                    </div>
+                      {/* <div style = {{marginTop : '100px'}}>
+                          <Live/>
+                      </div> */}
              </div>
             </div>
         )

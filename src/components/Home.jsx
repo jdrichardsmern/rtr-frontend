@@ -3,7 +3,6 @@ import { Component } from 'react';
 import Login from './Login'
 import axios from 'axios'
 import Authentication from "../middleware/auth"
-import {Redirect} from 'react-router-dom'
 
 export default class Home extends Component{
     state = {

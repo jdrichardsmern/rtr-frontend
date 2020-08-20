@@ -1,6 +1,6 @@
 import React from 'react'
 import { Component } from 'react';
-import {BrowserRouter as Router, Route , Switch , Link , useHistory , Redirect} from 'react-router-dom'
+import {BrowserRouter as Router, Route , Switch} from 'react-router-dom'
 import Profile from './components/Profile'
 // import Signup from './components/Signup'
 // import Login from './components/Login'
@@ -14,9 +14,6 @@ import SingleStock from './components/SingleStock';
 import Portfolio from './components/Portfolio'
 import axios from 'axios'
 import CreateStock from './components/CreateStock'
-
-
-import Live from './components/Live'
 
 
 export default class App extends Component{

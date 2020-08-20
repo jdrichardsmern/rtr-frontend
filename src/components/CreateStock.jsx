@@ -3,7 +3,7 @@ import { Component } from 'react';
 import TopNav from './TopNav'
 import axios from 'axios'
 import { Message } from 'semantic-ui-react'
-
+import Live from './Live'
 
 export default class Profile extends Component{
 
@@ -104,13 +104,19 @@ handleSubmit = (event) => {
         return (
             <div className='ui' style= {{display:'flex' , flexDirection:'column'}} >
                <TopNav user = {this.props.user} logout = {this.props.logout}>Create Stock</TopNav>
-                <div style={ {marginTop:'50px'}}>
-
+                <div style={ {display:'flex',marginTop:'200px'}}>
+                    
+                <div style = {{ textAlign:'center'}}>
+                    <h2> Capital: {this.props.user.capital.toFixed(2)}</h2>
+                    <hr/>
+                    <Live/>
+                    </div>
+{/* 
                     <div style = {{display:'flex' ,flexDirection:'column' , alignItems:'center' , marginTop:'20px'}}>
                          <h2>Capital: ${this.props.user.capital.toFixed(2)}</h2>
                     </div>
-                    <hr/>
-                    <form className='ui form' style={{display:'flex', flexDirection:'column', alignItems:"center"}} onSubmit={this.handleSubmit}>
+                    <hr/> */}
+                    <form className='ui form' style={{display:'flex', flexDirection:'column', alignItems:"center" , width:'100%'}} onSubmit={this.handleSubmit}>
                    
                 
                     {this.state.msg.errors ?  
