@@ -145,12 +145,12 @@ componentDidMount(){
                                 <input type='text' name='name' value={name} onChange={this.handleChange} />
                             </div>
                         </div>
-                        <div className='field'>
+                        {/* <div className='field'>
                             <label htmlFor='subject'>Email</label>
                             <div className='ui fluid input'>
                                 <input type='email' name='email' value={email} onChange={this.handleChange} />
                             </div>
-                        </div>
+                        </div> */}
                         <div className='field'>
                             <label htmlFor='article'>New Password</label>
                             <div className='ui fluid input'>

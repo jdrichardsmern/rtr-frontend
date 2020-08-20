@@ -23,21 +23,29 @@ export default class App extends Component{
             name:'',
             capital:0,
         },
+        searchTerm : "",
         portfolio:[],
         stocks: [],
         errors:"",
     }
+
+
+    handleSearch=(event) => {
+        this.setState({
+          searchTerm : event.target.value
+        })
+      }
+
+
+
     updateStock = (data) => {
         let stocks = data
         this.setState({
             stocks
-        }, () => {console.log(this.state.stocks)})
+        })
     }
 
-    // routeChange=(path)=> {
-    //     let history = useHistory();
-    //     history.push(path);
-    //   }
+  
     updateCaptial = async (pw) => {
             let axiosConfig = {
                 headers:{
@@ -112,7 +120,7 @@ export default class App extends Component{
     // }
 
     render (){
-        
+        const {user , searchTerm , stocks} = this.state
         return (
            
             
@@ -120,12 +128,12 @@ export default class App extends Component{
                 {this.state.login ? 
                     (
                 <Switch>
-                    <Route exact path= "/" render = {props => <Dashboard  user = {this.state.user} logout = {this.logout} updateStock = {this.updateStock} stocks={this.state.stocks} routeChange = {this.routeChange}  />}/>
-                    <Route exact path= "/profile" render = {props => <Profile  user = {this.state.user} logout = {this.logout}  updateUser={this.updateUser} />}/>
-                    <Route exact path= "/portfolio" render = {props => <Portfolio  user = {this.state.user} logout = {this.logout}   />}/>
-                    <Route exact path= "/createstock" render = {props => <CreateStock  user = {this.state.user} logout = {this.logout}   updateStock = {this.updateStock}/>}/>
+                    <Route exact path= "/" render = {props => <Dashboard  searchTerm = {searchTerm} handleSearch={this.handleSearch} user = {user} logout = {this.logout} updateStock = {this.updateStock} stocks={stocks}  />}/>
+                    <Route exact path= "/profile" render = {props => <Profile  user = {user} logout = {this.logout}  updateUser={this.updateUser} />}/>
+                    <Route exact path= "/portfolio" render = {props => <Portfolio  user = {user} logout = {this.logout}   />}/>
+                    <Route exact path= "/createstock" render = {props => <CreateStock  user = {user} logout = {this.logout}   updateStock = {this.updateStock}/>}/>
                     <Route excact path='/stock/:id' render={(props) => {
-                    return ( <SingleStock {...props }  logout = {this.logout} user = {this.state.user} updateCaptial = {this.updateCaptial} /> )
+                    return ( <SingleStock {...props }  logout = {this.logout} user = {user} updateCaptial = {this.updateCaptial} /> )
                 }} />
                     {/* <ProtectedRoute 
                     exact
