@@ -12,9 +12,11 @@ import Live from './Live';
 
 export default class Dashboard extends Component {
   componentDidMount() {
-    axios.get('/stock/all').then((response) => {
-      this.props.updateStock(response.data.stocks);
-    });
+    axios
+      .get('https://jdrichardstech-test-dave.herokuapp.com/stock/all')
+      .then((response) => {
+        this.props.updateStock(response.data.stocks);
+      });
   }
 
   render() {

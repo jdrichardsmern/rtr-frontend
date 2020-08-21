@@ -20,7 +20,9 @@ function SingleStock(props) {
   const { id } = useParams();
 
   const getStocks = async () => {
-    let data = await axios.get(`/stock/stock/${id}`);
+    let data = await axios.get(
+      `https://jdrichardstech-test-dave.herokuapp.com/stock/stock/${id}`
+    );
     await setStock(data.data.stock);
     await setHistory([...data.data.stock.history]);
   };
@@ -45,7 +47,7 @@ function SingleStock(props) {
         }
       };
       let data = await axios.put(
-        `/stock/buy/${id}`,
+        `https://jdrichardstech-test-dave.herokuapp.com/stock/buy/${id}`,
         { email: props.user.email, order: Number(number), password: password },
         axiosConfig
       );
@@ -66,7 +68,7 @@ function SingleStock(props) {
         }
       };
       let data = await axios.put(
-        `/stock/sell/${id}`,
+        `https://jdrichardstech-test-dave.herokuapp.com/stock/sell/${id}`,
         { email: props.user.email, sell: Number(number), password: password },
         axiosConfig
       );

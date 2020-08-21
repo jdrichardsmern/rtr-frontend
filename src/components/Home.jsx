@@ -62,7 +62,11 @@ export default class Home extends Component {
         }
       };
       axios
-        .post('/users/login', this.state.user, axiosConfig)
+        .post(
+          'https://jdrichardstech-test-dave.herokuapp.com/users/login',
+          this.state.user,
+          axiosConfig
+        )
         .then((response) => {
           Authentication.login(
             () => {
