@@ -41,7 +41,11 @@ export default class Home extends Component {
         }
       };
       axios
-        .post('/users/signup', this.state.user, axiosConfig)
+        .post(
+          'https://jdrichardstech-test-dave.herokuapp.com/users/signup',
+          this.state.user,
+          axiosConfig
+        )
         .then((response) => {
           this.setState({
             signup: false,
