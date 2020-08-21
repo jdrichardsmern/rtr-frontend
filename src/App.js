@@ -84,7 +84,9 @@ export default class App extends Component {
     });
   };
   componentDidMount() {
-    const data = JSON.parse(localStorage.getItem('user'));
+    const data = localStorage.getItem('user')
+      ? JSON.parse(localStorage.getItem('user'))
+      : null;
     if (data) {
       const { email, name, capital } = data;
       let updatedUser = { ...this.state.user };
